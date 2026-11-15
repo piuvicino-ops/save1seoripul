@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#D9F0FF"><title>서리풀1지구 동의서 현황</title>
+<style>
+:root{font-family:Arial,"Noto Sans KR",sans-serif;color:#183b58;background:#f4fafe}*{box-sizing:border-box}body{margin:0}
+nav{display:flex;gap:7px;padding:10px;position:sticky;top:0;background:#e8f4fc;z-index:3;justify-content:center}
+nav button,.subnav button{border:1px solid #bdd7e9;border-radius:10px;background:white;color:#386b89;padding:11px;font-weight:800;cursor:pointer}
+nav button[aria-selected=true],.subnav button[aria-selected=true]{background:#176f9e;color:white}
+header{text-align:center;padding:24px 12px;background:linear-gradient(120deg,#d6eeff,#f1faff)}h1{font-size:clamp(21px,5vw,30px);margin:0 0 8px}header p{font-size:12px;color:#597c92;margin:0}
+main{max-width:980px;margin:auto;padding:14px 14px 35px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#647f91;font-size:12px;margin-bottom:12px}
+button.reload{background:#228dcd;color:white;border:0;border-radius:10px;padding:10px 14px;font-weight:bold;cursor:pointer}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.card,.block{background:white;border:1px solid #d9e9f3;border-radius:14px;padding:13px}
+.card{text-align:center}.card small{display:block;color:#667f90;font-weight:700;font-size:11px}.card strong{display:block;font-size:clamp(19px,4vw,29px);margin-top:8px}.accent{color:#d65a0a}
+.block{margin-top:12px}.block h2{font-size:17px;margin:0 0 12px}.scroll{overflow-x:auto}
+table{width:100%;min-width:710px;border-collapse:collapse;font-size:12px}th,td{padding:11px 8px;text-align:right;border-bottom:1px solid #e6eef4;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}th{background:#eef7fc}tbody tr:last-child{background:#f0f8fd;font-weight:800}
+.note{font-size:11px;color:#698397;line-height:1.7}.error{color:#b64b3c;font-size:12px;white-space:pre-wrap}
+.panel[hidden],.subpanel[hidden]{display:none}.subnav{display:flex;gap:8px;margin:8px 0 14px}.subnav button{flex:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stats .card strong{font-size:23px}
+@media(max-width:550px){.cards{grid-template-columns:repeat(2,1fr)}nav button{font-size:12px;flex:1;padding:10px 5px}.stats{grid-template-columns:repeat(2,1fr)}}
+</style></head><body>
+<nav><button id="tabNew" aria-selected="true" onclick="tab('new')">서울시 배제 동의서</button><button id="tabOld" aria-selected="false" onclick="tab('old')">기존 동의서·신분증</button></nav>
+<section class="panel" id="new"><header><h1>서리풀1지구 서울시 추천 감정평가사<br>배제 동의서 현황</h1><p>온라인·오프라인 통합 · 고유 PID 중복 제외 · 5분 자동 확인</p></header>
+<main><div class="toolbar"><span id="newStatus">집계 연결 중</span><button class="reload" onclick="loadNew()">새로고침 ↻</button></div>
+<div class="cards"><div class="card"><small>전체 대상 소유자</small><strong id="nTotal">—</strong></div><div class="card"><small>현재 제출자</small><strong class="accent" id="nSubmit">—</strong></div><div class="card"><small>인원 동의율</small><strong class="accent" id="nPR">—</strong></div><div class="card"><small>면적 동의율</small><strong class="accent" id="nAR">—</strong></div></div>
+<div class="block"><h2>대책위별 동의서 접수 현황</h2><div class="scroll"><table><thead><tr><th>구분</th><th>대상 소유자</th><th>대상 지분면적</th><th>제출자 수</th><th>제출 지분면적</th><th>인원 동의율</th><th>면적 동의율</th></tr></thead><tbody id="newRows"><tr><td colspan="7">서버에서 집계를 가져오는 중입니다.</td></tr></tbody></table></div><p id="newError" class="error"></p></div>
+<p class="note">온라인 또는 오프라인으로 제출한 소유자는 PID당 한 번만 집계합니다. 개인별 성명·주소·연락처는 공개하지 않습니다.<br><span id="newTime"></span></p></main></section>
+<section class="panel" id="old" hidden><header><h1>서리풀1지구 기존 동의서·신분증 현황</h1><p>기존 집계 서버 연결 유지</p></header>
+<main><div class="subnav"><button id="subConsent" aria-selected="true" onclick="subtab('consent')">주민추천 동의서</button><button id="subId" aria-selected="false" onclick="subtab('id')">신분증 제출</button></div>
+<div class="subpanel" id="consent"><div class="toolbar"><span id="oldStatus">연결 대기</span><button class="reload" onclick="loadConsent()">새로고침 ↻</button></div><div class="stats" id="consentStats"></div><p id="oldError" class="error"></p></div>
+<div class="subpanel" id="id" hidden><div class="toolbar"><span id="idStatus">연결 대기</span><button class="reload" onclick="loadId()">새로고침 ↻</button></div><div class="stats" id="idStats"></div><p id="idError" class="error"></p></div></main></section>
+<script>
+'use strict';
+const NEW_API='https://script.google.com/macros/s/AKfycbwzMiVGPLknhQx20rUvtDG9OvjQ9ku7w_d01aA_befl9OfiIWCVAzn9Q22Su_G2prsE/exec';
+const CONSENT_API='https://script.google.com/macros/s/AKfycbzkTw41fteahbrfplFdzPFhTTSbpe2lw_jtzXPvCn9P2K0r8vbqHpssTCQ40hMrsVZW4g/exec';
+const ID_API='https://script.google.com/macros/s/AKfycbxYPrmKIqWtpVH9HM_fa_cg8Bma9vG7dD3_u01w-csUs7Uf5WxKs3pv-Wjkfzg-Q0Ct/exec';
+const el=id=>document.getElementById(id);
+const fmt=(v,d=0)=>{const n=Number(String(v??'').replace(/[,㎡명%]/g,''));return Number.isFinite(n)&&v!==''&&v!=null?n.toLocaleString('ko-KR',{maximumFractionDigits:d}):'—'};
+const pct=v=>{if(v==null||v==='')return '—';const n=Number(String(v).replace('%',''));return Number.isFinite(n)?((String(v).includes('%')||n>1)?n:n*100).toFixed(2)+'%':'—'};
+function jsonp(url){return new Promise((resolve,reject)=>{const cb='sr1_'+Date.now()+'_'+Math.floor(Math.random()*1e6);const s=document.createElement('script');const timer=setTimeout(()=>finish(new Error('응답 시간 초과')),18000);function finish(e,d){clearTimeout(timer);delete window[cb];s.remove();e?reject(e):resolve(d)}window[cb]=d=>finish(null,d);s.onerror=()=>finish(new Error('웹 앱 연결 실패: 공개 권한 및 JSONP 설정을 확인하세요'));s.src=url+'?callback='+encodeURIComponent(cb)+'&t='+Date.now();document.head.appendChild(s)})}
+function tab(v){el('new').hidden=v!=='new';el('old').hidden=v!=='old';el('tabNew').setAttribute('aria-selected',v==='new');el('tabOld').setAttribute('aria-selected',v==='old');if(v==='old')loadConsent()}
+function subtab(v){el('consent').hidden=v!=='consent';el('id').hidden=v!=='id';el('subConsent').setAttribute('aria-selected',v==='consent');el('subId').setAttribute('aria-selected',v==='id');v==='id'?loadId():loadConsent()}
+function normalizeRow(r){if(Array.isArray(r))return r;return [r.label??r.category??r.name,r.targetPersons??r.totalPersons,r.targetArea??r.totalArea,r.submittedPersons??r.persons,r.submittedArea??r.area,r.personRate,r.areaRate]}
+async function loadNew(){el('newStatus').textContent='집계 확인 중';el('newError').textContent='';try{const d=await jsonp(NEW_API);if(d?.ok===false)throw Error(d.error||'서버 오류');const x=d.data||d.result||d;let rows=x.rows||x.categories||x.breakdown||x.summaryRows||x.table;
+if(rows&&!Array.isArray(rows))rows=Object.entries(rows).map(([label,v])=>({label,...v}));
+if(!Array.isArray(rows)||!rows.length)throw Error('집계 응답에 rows 데이터가 없습니다. Apps Script 응답 형식을 확인해야 합니다.');
+rows=rows.map(normalizeRow);el('newRows').replaceChildren();
+rows.forEach(r=>{const tr=document.createElement('tr');[String(r[0]??''),fmt(r[1])+'명',fmt(r[2],1)+'㎡',fmt(r[3])+'명',fmt(r[4],1)+'㎡',pct(r[5]),pct(r[6])].forEach(t=>{const td=document.createElement('td');td.textContent=t;tr.appendChild(td)});el('newRows').appendChild(tr)});
+const total=rows.find(r=>/전체|합계/.test(String(r[0])))||rows.at(-1);
+el('nTotal').textContent=fmt(total[1])+'명';el('nSubmit').textContent=fmt(total[3])+'명';el('nPR').textContent=pct(total[5]);el('nAR').textContent=pct(total[6]);
+el('newStatus').textContent='집계 정상 · 5분 자동 갱신';el('newTime').textContent='최근 확인: '+new Date().toLocaleString('ko-KR',{timeZone:'Asia/Seoul'});
+}catch(e){el('newStatus').textContent='연결 확인 필요';el('newError').textContent=e.message}}
+function renderStats(target,items){el(target).replaceChildren();items.forEach(([label,value])=>{const card=document.createElement('div');card.className='card';const k=document.createElement('small');k.textContent=label;const v=document.createElement('strong');v.textContent=value;card.append(k,v);el(target).appendChild(card)})}
+async function loadConsent(){el('oldStatus').textContent='집계 확인 중';try{const d=await jsonp(CONSENT_API);if(d?.ok===false)throw Error(d.error);renderStats('consentStats',[['전체 대상 인원',fmt(d.totalPersons)+'명'],['누적 동의 인원',fmt(d.persons)+'명'],['인원 동의율',pct(d.personRate)],['전체 대상 면적',fmt(d.totalArea,1)+'㎡'],['누적 동의 면적',fmt(d.area,1)+'㎡'],['면적 동의율',pct(d.areaRate)],['직전 대비 인원',fmt(d.deltaPersons)+'명'],['직전 대비 면적',fmt(d.deltaArea,1)+'㎡'],['미동의 인원',fmt(d.pendingPersons)+'명']]);el('oldStatus').textContent='집계 정상'}catch(e){el('oldStatus').textContent='연결 확인 필요';el('oldError').textContent=e.message}}
+async function loadId(){el('idStatus').textContent='집계 확인 중';try{const d=await jsonp(ID_API);if(d?.ok===false)throw Error(d.error);renderStats('idStats',[['전체 누적 접수',fmt(d.received)+'건'],['중복 제거 누적',fmt(d.readDistinct)+'건'],['오늘 접수',fmt(d.today)+'건'],['중복 의심',fmt(d.duplicateRead?.extraSubmissions)+'건'],['성명만 판독',fmt(d.ocr?.nameOnly)+'건'],['생년월일만 판독',fmt(d.ocr?.birthOnly)+'건'],['판독 실패',fmt(d.ocr?.none)+'건']]);el('idStatus').textContent='집계 정상'}catch(e){el('idStatus').textContent='연결 확인 필요';el('idError').textContent=e.message}}
+loadNew();setInterval(()=>{loadNew();if(!el('old').hidden){el('id').hidden?loadConsent():loadId()}},300000);
+</script></body></html>
