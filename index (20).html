@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#D9F0FF"><title>서리풀1지구 동의서 현황</title>
+<style>
+:root{font-family:Arial,"Noto Sans KR",sans-serif;color:#183b58;background:#f4fafe}*{box-sizing:border-box}body{margin:0}
+nav{display:flex;gap:7px;padding:10px;position:sticky;top:0;background:#e8f4fc;z-index:3;justify-content:center}
+nav button,.subnav button{border:1px solid #bdd7e9;border-radius:10px;background:white;color:#386b89;padding:11px;font-weight:800;cursor:pointer}
+nav button[aria-selected=true],.subnav button[aria-selected=true]{background:#176f9e;color:white}
+header{text-align:center;padding:24px 12px;background:linear-gradient(120deg,#d6eeff,#f1faff)}h1{font-size:clamp(21px,5vw,30px);margin:0 0 8px}header p{font-size:12px;color:#597c92;margin:0}
+main{max-width:980px;margin:auto;padding:14px 14px 35px}.toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;color:#647f91;font-size:12px;margin-bottom:12px}
+button.reload{background:#228dcd;color:white;border:0;border-radius:10px;padding:10px 14px;font-weight:bold;cursor:pointer}
+.cards{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.card,.block{background:white;border:1px solid #d9e9f3;border-radius:14px;padding:13px}
+.card{text-align:center}.card small{display:block;color:#667f90;font-weight:700;font-size:11px}.card strong{display:block;font-size:clamp(19px,4vw,29px);margin-top:8px}.accent{color:#d65a0a}
+.block{margin-top:12px}.block h2{font-size:17px;margin:0 0 12px}.scroll{overflow-x:auto}
+table{width:100%;min-width:710px;border-collapse:collapse;font-size:12px}th,td{padding:11px 8px;text-align:right;border-bottom:1px solid #e6eef4;white-space:nowrap}
+th:first-child,td:first-child{text-align:left}th{background:#eef7fc}tbody tr:last-child{background:#f0f8fd;font-weight:800}
+.note{font-size:11px;color:#698397;line-height:1.7}.error{color:#b64b3c;font-size:12px;white-space:pre-wrap}
+.panel[hidden],.subpanel[hidden]{display:none}.subnav{display:flex;gap:8px;margin:8px 0 14px}.subnav button{flex:1}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.stats .card strong{font-size:23px}
+@media(max-width:550px){.cards{grid-template-columns:repeat(2,1fr)}nav button{font-size:12px;flex:1;padding:10px 5px}.stats{grid-template-columns:repeat(2,1fr)}}
+.deadline{display:flex;align-items:center;justify-content:space-between;background:#eaf5ff;border:1px solid #cfe5f5;border-radius:14px;padding:15px 20px;margin-bottom:12px;font-weight:800}.deadline strong{font-size:27px;color:#d65a0a}.sheet-table{min-width:770px}.sheet-table td:first-child,.sheet-table th:first-child{min-width:255px;white-space:normal}.sheet-table tbody tr:last-child{background:#f0f8fd;font-weight:800}.sheet-table tbody tr:nth-child(2){background:#fff9ef}#targetRows tr:last-child td:nth-child(4),#targetRows tr:last-child td:nth-child(5){color:#d65a0a;font-weight:900}@media(max-width:600px){.deadline{padding:12px 14px}.deadline strong{font-size:24px}}
+
+/* 충족률 강조 및 제목 보조 설명 */
+#new .criteria-note{font-size:12px;font-weight:400;color:#667f90;white-space:normal}
+#new #targetRows tr:first-child td:nth-child(6),#new #targetRows tr:first-child td:nth-child(7){font-weight:900;color:#17364f;font-size:clamp(12px,2.7vw,17px)}
+/* 모바일 지표: 7열 전체를 화면 안에 표시하며 가로 스크롤을 사용하지 않음 */
+#new .scroll{overflow-x:visible;width:100%}
+#new .sheet-table{width:100%;min-width:0;max-width:100%;table-layout:fixed;border-collapse:collapse}
+#new .sheet-table th,#new .sheet-table td{min-width:0!important;max-width:none;white-space:normal;overflow-wrap:anywhere;word-break:keep-all;vertical-align:middle;line-height:1.35;text-align:center;padding:9px 3px}
+#new .sheet-table th:first-child,#new .sheet-table td:first-child{width:26%;text-align:left;overflow-wrap:anywhere;word-break:keep-all}
+#new .sheet-table th:nth-child(2),#new .sheet-table td:nth-child(2){width:12%}
+#new .sheet-table th:nth-child(3),#new .sheet-table td:nth-child(3){width:14%}
+#new .sheet-table th:nth-child(4),#new .sheet-table td:nth-child(4){width:11%}
+#new .sheet-table th:nth-child(5),#new .sheet-table td:nth-child(5){width:14%}
+#new .sheet-table th:nth-child(6),#new .sheet-table td:nth-child(6){width:11.5%}
+#new .sheet-table th:nth-child(7),#new .sheet-table td:nth-child(7){width:11.5%}
+#new .sheet-table th{font-weight:800;background:#eaf5fc}
+#new .sheet-table td{font-variant-numeric:tabular-nums}
+@media(max-width:600px){
+ #new main{padding:10px 6px 25px}
+ #new .block{padding:10px 5px;border-radius:10px}
+ #new .block h2{font-size:14px;margin:0 0 9px 4px}
+ #new .sheet-table th{font-size:9px;letter-spacing:-.06em;padding:8px 1px;line-height:1.25}
+ #new .sheet-table td{font-size:10px;letter-spacing:-.045em;padding:10px 1px;line-height:1.4}
+ #new .sheet-table td:first-child{font-size:10px;letter-spacing:-.055em}
+ #new .sheet-table th:first-child{font-size:9px}
+ #new .toolbar{font-size:10px}
+}
+@media(max-width:375px){#new .sheet-table th{font-size:8.5px}#new .sheet-table td{font-size:9px}#new .sheet-table td:first-child{font-size:9px}}
+.duplicate-note{margin:11px 2px 0;font-size:11px;font-weight:400;line-height:1.65;color:#718394;letter-spacing:-.02em}.duplicate-note strong{font-weight:500;color:#647789}@media(max-width:600px){.duplicate-note{font-size:10.5px}}
+</style></head><body>
+<nav><button id="tabNew" aria-selected="true" onclick="tab('new')">서울시 배제 동의서</button><button id="tabConsent" aria-selected="false" onclick="tab('consent')">동의서 집계현황</button><button id="tabId" aria-selected="false" onclick="tab('id')">신분증 제출현황</button></nav>
+<section class="panel" id="new"><header><h1>서울시 추천 감정평가사 배제 동의서 현황</h1><p>「지표」 시트의 항목·행 순서·표 구성 반영</p></header>
+<main><div class="toolbar"><span id="newStatus">지표 데이터 확인 중</span><button class="reload" onclick="loadNew()">새로고침 ↻</button></div>
+<div class="deadline"><span>마감일 (2026.11.23)</span><strong id="deadline">—</strong></div>
+<div class="block"><h2>배제 조건에 대한 현재 충족률 <span class="criteria-note">(100% 기준)</span></h2><div class="scroll"><table class="sheet-table"><thead><tr><th>구분</th><th>충족 조건<br>소유자 수</th><th>충족 조건<br>지분면적<br>(㎡)</th><th>제출자<br>수</th><th>제출<br>지분면적<br>(㎡)</th><th>인원<br>충족률</th><th>면적<br>충족률</th></tr></thead><tbody id="targetRows"><tr><td>(총통합은 모두 확보한다는 가정)</td><td>890</td><td>939,101</td><td>681</td><td>614,465</td><td>76.52%</td><td>65.44%</td></tr><tr><td>차이</td><td></td><td></td><td>209</td><td>324,636</td><td></td><td></td></tr></tbody></table></div></div>
+<div class="block"><h2>총주민대책위원회 동의서 접수 집계 현황</h2><p class="duplicate-note">※ <strong>총통합 → 중복접수</strong>: 총통합 감정평가사 추천 동의서를 통해 서울시 배제 동의를 완료한 소유자가 총주민대책위원회에 다시 제출한 경우.</p><div class="scroll"><table class="sheet-table"><thead><tr><th>감평 추천 동의서<br>제출 대책위</th><th>대상<br>소유자 수</th><th>대상<br>지분면적<br>(㎡)</th><th>제출자<br>수</th><th>제출<br>지분면적<br>(㎡)</th><th>인원 대비<br>접수율</th><th>면적 대비<br>접수율</th></tr></thead><tbody id="detailRows"><tr><td>총주민→핵심 목표 대상</td><td>462</td><td>439,841</td><td>102</td><td>70,489</td><td>22.08%</td><td>16.03%</td></tr><tr><td>총통합(중복은 총통합으로 계산)→중복접수</td><td>573</td><td>542,863</td><td>67</td><td>57,224</td><td>11.69%</td><td>10.54%</td></tr><tr><td>기타 (동의서 미제공·미제출)→부수적 목표 대상</td><td>745</td><td>425,948</td><td>6</td><td>1,113</td><td>0.81%</td><td>0.26%</td></tr><tr><td>전체 소유자 및 필지 기준</td><td>1,780</td><td>1,408,652</td><td>175</td><td>128,826</td><td>9.83%</td><td>9.15%</td></tr><tr><td>총주민 +기타 (기타는 추가확보)</td><td></td><td></td><td>108</td><td>71,602</td><td>23.38%</td><td>16.28%</td></tr></tbody></table></div></div>
+<p class="note">표의 항목과 순서는 구글 스프레드시트 「지표」 탭을 기준으로 작성했습니다. 서버 연결 실패 시 표시되는 수치는 마지막 확인값이며 실시간 수치가 아닙니다. <a href="https://docs.google.com/spreadsheets/d/1-MLmNGkSYism47oN_Tph7hiHDTmOl5uRGvG-Frq1EMA/edit?gid=535966646" target="_blank" rel="noopener">원본 지표 열기</a></p><p class="error" id="newError"></p></main></section>
+<section class="panel" id="consent" hidden><header><h1>서리풀1지구 주민추천 감정평가사<br>동의서 집계현황</h1><p>기존 동의서 집계 서버 연결 유지</p></header><main><div class="toolbar"><span id="oldStatus">연결 대기</span><button class="reload" onclick="loadConsent()">새로고침 ↻</button></div><div class="stats" id="consentStats"></div><p id="oldError" class="error"></p></main></section>
+<section class="panel" id="id" hidden><header><h1>서리풀1지구 주민추천 감정평가사<br>신분증 제출현황</h1><p>기존 신분증 집계 서버 연결 유지</p></header><main><div class="toolbar"><span id="idStatus">연결 대기</span><button class="reload" onclick="loadId()">새로고침 ↻</button></div><div class="stats" id="idStats"></div><p id="idError" class="error"></p></main></section>
+<script>
+'use strict';
+const NEW_API='https://script.google.com/macros/s/AKfycbwzMiVGPLknhQx20rUvtDG9OvjQ9ku7w_d01aA_befl9OfiIWCVAzn9Q22Su_G2prsE/exec';
+const SHEET_ID='1-MLmNGkSYism47oN_Tph7hiHDTmOl5uRGvG-Frq1EMA';
+const CONSENT_API='https://script.google.com/macros/s/AKfycbzkTw41fteahbrfplFdzPFhTTSbpe2lw_jtzXPvCn9P2K0r8vbqHpssTCQ40hMrsVZW4g/exec';
+const ID_API='https://script.google.com/macros/s/AKfycbxYPrmKIqWtpVH9HM_fa_cg8Bma9vG7dD3_u01w-csUs7Uf5WxKs3pv-Wjkfzg-Q0Ct/exec';
+const el=id=>document.getElementById(id);
+const fmt=(v,d=0)=>{const n=Number(String(v??'').replace(/[,㎡명%]/g,''));return Number.isFinite(n)&&v!==''&&v!=null?n.toLocaleString('ko-KR',{maximumFractionDigits:d}):'—'};
+const pct=v=>{if(v==null||v==='')return '—';const n=Number(String(v).replace('%',''));return Number.isFinite(n)?((String(v).includes('%')||n>1)?n:n*100).toFixed(2)+'%':'—'};
+function jsonp(url){return new Promise((resolve,reject)=>{const cb='sr1_'+Date.now()+'_'+Math.floor(Math.random()*1e6);const s=document.createElement('script');const timer=setTimeout(()=>finish(new Error('응답 시간 초과')),18000);function finish(e,d){clearTimeout(timer);delete window[cb];s.remove();e?reject(e):resolve(d)}window[cb]=d=>finish(null,d);s.onerror=()=>finish(new Error('웹 앱 연결 실패: 공개 권한 및 JSONP 설정을 확인하세요'));s.src=url+'?callback='+encodeURIComponent(cb)+'&t='+Date.now();document.head.appendChild(s)})}
+function tab(v){['new','consent','id'].forEach(k=>{el(k).hidden=k!==v});el('tabNew').setAttribute('aria-selected',v==='new');el('tabConsent').setAttribute('aria-selected',v==='consent');el('tabId').setAttribute('aria-selected',v==='id');if(v==='consent')loadConsent();if(v==='id')loadId()}
+function normalizeRow(r){if(Array.isArray(r))return r;return [r.label??r.category??r.name,r.targetPersons??r.totalPersons,r.targetArea??r.totalArea,r.submittedPersons??r.persons,r.submittedArea??r.area,r.personRate,r.areaRate]}
+function sheetCell(row,col){const c=row?.c?.[col];return c?.f??(c?.v==null?'':String(c.v))}
+function sheetFill(tbodyId,rows){const body=el(tbodyId);body.replaceChildren();rows.forEach(r=>{const tr=document.createElement('tr');r.forEach(value=>{const td=document.createElement('td');td.textContent=value;tr.appendChild(td)});body.appendChild(tr)})}
+function findRows(payload){
+ const d=payload?.data??payload?.result??payload;
+ const candidates=[d?.rows,d?.sheetRows,d?.values,d?.table?.rows,d?.indicator?.rows,d?.metrics?.rows,d?.groups,d?.breakdown];
+ for(const candidate of candidates){
+  if(Array.isArray(candidate)&&candidate.length>=7){
+   const rows=candidate.map(r=>Array.isArray(r)?r:(r?.c? r.c.map(c=>c?.f??c?.v??''):normalizeRow(r)));
+   if(rows.length>=13){const shift=rows[0]?.[0]==='마감일(2026.11.23)'?2:0;return {target:[rows[3+shift],rows[4+shift]],detail:rows.slice(8+shift,13+shift)}}
+   if(rows.length===7)return {target:rows.slice(0,2),detail:rows.slice(2,7)};
+  }
+ }
+ if(Array.isArray(d?.condition)&&Array.isArray(d?.groups))return {target:d.condition,detail:d.groups};
+ if(d?.condition&&d?.gap&&Array.isArray(d?.groups))return {target:[normalizeRow(d.condition),normalizeRow(d.gap)],detail:d.groups.map(normalizeRow)};
+ return null;
+}
+function loadNew(){
+ const now=new Date();const kst=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Seoul',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);
+ const diff=Math.round((Date.UTC(2026,10,23)-Date.parse(kst+'T00:00:00Z'))/86400000);
+ el('deadline').textContent=diff>0?'D-'+diff:diff===0?'D-DAY':'마감';
+ el('newStatus').textContent='새 Apps Script 서버 연결 중';el('newError').textContent='';
+ jsonp(NEW_API).then(payload=>{
+  if(payload?.ok===false||payload?.success===false)throw Error(payload.error||payload.message||'서버 오류');
+  const parsed=findRows(payload);
+  if(!parsed||parsed.target.length!==2||parsed.detail.length!==5||parsed.target.some(r=>!Array.isArray(r)||r.length<7)||parsed.detail.some(r=>!Array.isArray(r)||r.length<7))throw Error('서버 응답은 받았지만 지표 데이터 형식이 맞지 않습니다. 서버의 JSON 필드 구성을 확인해야 합니다.');
+  sheetFill('targetRows',parsed.target.map(r=>r.slice(0,7)));
+  sheetFill('detailRows',parsed.detail.map(r=>r.slice(0,7)));
+  el('newStatus').textContent='새 Apps Script 데이터 반영 완료';
+ }).catch(e=>{el('newStatus').textContent='새 Apps Script 연결 확인 필요';el('newError').textContent='실시간 데이터 미확인 — 화면의 숫자는 마지막 확인값입니다. '+e.message});
+}
+function renderStats(target,items){el(target).replaceChildren();items.forEach(([label,value])=>{const card=document.createElement('div');card.className='card';const k=document.createElement('small');k.textContent=label;const v=document.createElement('strong');v.textContent=value;card.append(k,v);el(target).appendChild(card)})}
+async function loadConsent(){el('oldStatus').textContent='집계 확인 중';try{const d=await jsonp(CONSENT_API);if(d?.ok===false)throw Error(d.error);renderStats('consentStats',[['전체 대상 인원',fmt(d.totalPersons)+'명'],['누적 동의 인원',fmt(d.persons)+'명'],['인원 동의율',pct(d.personRate)],['전체 대상 면적',fmt(d.totalArea,1)+'㎡'],['누적 동의 면적',fmt(d.area,1)+'㎡'],['면적 동의율',pct(d.areaRate)],['직전 대비 인원',fmt(d.deltaPersons)+'명'],['직전 대비 면적',fmt(d.deltaArea,1)+'㎡'],['미동의 인원',fmt(d.pendingPersons)+'명']]);el('oldStatus').textContent='집계 정상'}catch(e){el('oldStatus').textContent='연결 확인 필요';el('oldError').textContent=e.message}}
+async function loadId(){el('idStatus').textContent='집계 확인 중';try{const d=await jsonp(ID_API);if(d?.ok===false)throw Error(d.error);renderStats('idStats',[['전체 누적 접수',fmt(d.received)+'건'],['중복 제거 누적',fmt(d.readDistinct)+'건'],['오늘 접수',fmt(d.today)+'건'],['중복 의심',fmt(d.duplicateRead?.extraSubmissions)+'건'],['성명만 판독',fmt(d.ocr?.nameOnly)+'건'],['생년월일만 판독',fmt(d.ocr?.birthOnly)+'건'],['판독 실패',fmt(d.ocr?.none)+'건']]);el('idStatus').textContent='집계 정상'}catch(e){el('idStatus').textContent='연결 확인 필요';el('idError').textContent=e.message}}
+loadNew();setInterval(()=>{if(!el('consent').hidden)loadConsent();if(!el('id').hidden)loadId()},300000);
+</script></body></html>
